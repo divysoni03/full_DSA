@@ -29,6 +29,28 @@ int binarySearch(int arr[], int size, int target) {
     return -1;
 }
 
+// recursive way of binary search
+// int binarySearch(int *arr, int low, int high, int target) {
+//     // O(log n) -> time complexity
+//     // O(1) -> space complexity (if recursive without optimization O(log n))
+
+//     // Recursive Approach
+//     if(high >= low) {
+//         int mid = (low + high) / 2;
+
+//         if(arr[mid] == target) {
+//             return mid;
+//         }
+        
+//         if(arr[mid] > target) {
+//             return binarySearch(arr, low, mid-1, target);
+//         } else {
+//             return binarySearch(arr, mid+1, high, target);
+//         }
+//     }
+//     return -1;
+// }
+
 // Printing array
 void printArray(int arr[], int size) {
     printf("\nArray elements: { ");
