@@ -56,7 +56,7 @@ void bubbleSort(int* arr, int size) {
                 this is an optimization for early termination */
             break;
         }
-    }   /* end of oputer for */
+    }   /* end of outer for loop*/
 }
 
 /*
