@@ -19,23 +19,13 @@ struct Node* createNode(int data) {
 
 void insertAtBeginning(struct Node** head, int data) {    
     struct Node* newNode = createNode(data);
-    if (newNode == NULL) {
-        printf("Memory allocation failed!\n");
-        return;
-    }
+    if(*head == NULL) {*head = newNode;return;}
     newNode->next = *head;
     *head = newNode;
 }
 void insertAtEnd(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
-    if (newNode == NULL) {
-        printf("\nMemory allocation failed, please try again.");
-        return;
-    }
-    if (*head == NULL) {
-        *head = newNode;
-        return;
-    }
+    if (*head == NULL) {*head = newNode;return;}
     struct Node* tempNode = *head;
     while (tempNode->next != NULL) {
         tempNode = tempNode->next;
@@ -43,17 +33,10 @@ void insertAtEnd(struct Node** head, int data) {
     tempNode->next = newNode;
 }
 void insertAtPosition(struct Node** head, int data, int position) {
-    if(position < 1) {
-        printf("Invalid Position.\n");
-        return;
-    }
+    if(position < 1) {printf("Invalid Position.\n");return;}
 
     struct Node* newNode = createNode(data);
-    if(position == 1) {
-        newNode->next = *head;
-        *head = newNode;
-        return;
-    }
+    if(position == 1) {newNode->next = *head;*head = newNode;return;}
 
     struct Node* temp = *head;
     for (int i = 1; i < position - 1; i++) {
@@ -102,9 +85,25 @@ void reverseList(struct Node** head) {
     }
     *head = prev;
 }
+void deleteAtBeginning(struct Node **head) {
+    if(*head == NULL) return;
+
+    struct Node* temp = *head;
+    *head = temp->next;
+    free(temp);
+}
+void deleteAtEnd(struct Node **head) {
+    if(*head == NULL) return;
+    struct Node* temp = *head;
+    while(temp->next->next != NULL) {
+        temp = temp->next;
+    }
+    free(temp->next);
+    temp->next = NULL;
+}
 
 void printList(struct Node* head) {
-    printf("\nList: ==> ");
+    printf("\nList: ");
     while (head != NULL) {
         printf("%d -> ", head->data);
         head = head->next;
@@ -172,13 +171,13 @@ int main() {
             reverseList(&head);
             break;
 
-        // case 7:
-        //     deleteAtBeginning(&head);
-        //     break;
+        case 7:
+            deleteAtBeginning(&head);
+            break;
 
-        // case 8:
-        //     deleteAtEnd(&head);
-        //     break;
+        case 8:
+            deleteAtEnd(&head);
+            break;
 
         // case 9:
         //     printf("\nEnter the position to delete the node: ");
