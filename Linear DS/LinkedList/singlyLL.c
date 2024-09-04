@@ -56,10 +56,12 @@ void insertAtPosition(struct Node** head, int data, int position) {
     temp->next = newNode;
 }
 int searchByValue(struct Node* head, int key) {
+    int count = 0;
     while(head != NULL) {
         if (head->data == key) {
-            return 1;
+            return count;
         }
+        count++;
         head = head->next;
     }
     return 0;
@@ -100,6 +102,34 @@ void deleteAtEnd(struct Node **head) {
     }
     free(temp->next);
     temp->next = NULL;
+}
+void deleteAtPosition(struct Node** head, int position) {
+    if(position < 1) {
+        printf("\nInvalid Position, Please Try again with Valid Position.");
+        return;
+    }
+    if(position == 1) {
+        struct Node* temp = *head;
+        *head = NULL;
+        free(temp);
+        return;
+    }
+
+    struct Node* curr = *head;
+    for(int i=1; i<position-1; i++) {
+        if(curr == NULL) {
+            printf("\nPosition is Out of Bound.");
+            return;
+        }
+        curr = curr->next;
+    }
+    if(curr == NULL) {
+        printf("\nPostion is out of Bound.");
+        return;
+    }
+    struct Node* temp = curr->next;
+    curr->next = temp->next;
+    free(temp);
 }
 
 void printList(struct Node* head) {
@@ -158,7 +188,8 @@ int main() {
         case 4:
             printf("\nEnter the key to search from the list: ");
             scanf("%d", &key);
-            searchByValue(head, key) ? printf("\n%d present in the list...\n", key) : printf("\n%d is not present in the list...\n", key);
+            int index = searchByValue(head, key);
+            (index>0) ? printf("\n%d present in the list At %d index.\n", key, index) : printf("\n%d is not present in the list.\n", key);
             system("pause");
             break;
 
@@ -179,11 +210,11 @@ int main() {
             deleteAtEnd(&head);
             break;
 
-        // case 9:
-        //     printf("\nEnter the position to delete the node: ");
-        //     scanf("%d", &position);
-        //     deleteAtPosition(&head, position);
-        //     break;
+        case 9:
+            printf("\nEnter the position to delete the node: ");
+            scanf("%d", &position);
+            deleteAtPosition(&head, position);
+            break;
 
         case 10:
             printList(head);
