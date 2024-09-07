@@ -131,6 +131,11 @@ void deleteAtPosition(struct Node** head, int position) {
     curr->next = temp->next;
     free(temp);
 }
+void printFromLast(struct Node* head) {
+    if(head == NULL) return;
+    printFromLast(head->next);
+    printf(" <- %d", head->data);
+}
 
 void printList(struct Node* head) {
     printf("\nList: ");
@@ -220,11 +225,13 @@ int main() {
             printList(head);
             break;
 
-        // case 11:
-        //     printf("\nList from End: ");
-        //     PrintFromEnd(head);
-        //     printf("NULL\n");
-        //     break;
+        case 11:
+            printf("\nList from End: ");
+            printf("NULL");
+            printFromLast(head);
+            printf(" <- Head\n");
+            system("pause");
+            break;
 
         case 0:
             printf("\nExiting...\n");
