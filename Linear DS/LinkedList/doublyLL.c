@@ -116,6 +116,33 @@ void deleteAtPosition(struct Node** head, int position) {
     (temp->next)->prev = curr;
     free(temp);
 }
+void reverseList(struct Node** head) {
+    struct Node* prev = NULL;
+    struct Node* curr = *head;
+    struct Node* next = NULL;
+    while(curr != NULL) {
+        next = curr->next; // saving next node
+        curr->next = prev; // modifying connection
+        curr->prev = next;
+        prev = curr;
+        curr = next;
+    }
+    *head = prev;
+}
+void printFromEnd(struct Node* head) {
+    if(head == NULL) return;
+    printFromEnd(head->next);
+    printf(" <- %d -> ", head->data);
+}
+
+int getLength(struct Node* head) {
+    int count = 0;
+    while(head != NULL) {
+        head = head->next;
+        count++;
+    }
+    return count;
+}
 
 void print(struct Node* head) {
     printf("\nLinkedList : head ");
@@ -138,7 +165,9 @@ int main() {
         printf("\n4.Delete At Beginning");
         printf("\n5.Delete At End");
         printf("\n6.Delete At Position");
-        // printf("\n");
+        printf("\n7.reverse Linked list");
+        printf("\n8.get length");
+        printf("\n9.printing in reverse order");
         printf("\nEnter Your Choice :");
         scanf("%d", &choice);
 
@@ -170,6 +199,19 @@ int main() {
                 printf("\nEnter Position :");
                 scanf("%d", &position);
                 deleteAtPosition(&head, position);
+                break;
+            case 7:
+                reverseList(&head);
+                break;
+            case 8:
+                printf("Linked list length : %d\n", getLength(head));
+                system("pause");
+                break;
+            case 9:
+                printf("List : NULL ");
+                printFromEnd(head);
+                printf(" head");
+                system("pause");
                 break;
             case 0:
                 printf("Exiting the program.");
