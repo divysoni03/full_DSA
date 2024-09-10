@@ -82,6 +82,40 @@ void deleteAtBeginning(struct Node** head) {
     (*head)->prev = NULL;
     free(temp);
 }
+void deleteAtEnd(struct Node** head) {
+    if(*head == NULL) return;
+    if((*head)->next == NULL) {
+        struct Node* temp = *head;
+        *head = NULL;
+        free(temp);
+    }
+    struct Node* curr = *head;
+    while(curr->next->next != NULL) {
+        curr = curr->next;
+    }
+    struct Node* temp = curr->next;
+    curr->next = NULL;
+    free(temp);
+}
+void deleteAtPosition(struct Node** head, int position) {
+    if(*head == NULL) return;
+    if(position < 1) {
+        printf("\nInvalid Position, please enter Valid position.");
+        return;
+    }
+    struct Node* curr = *head;
+    for(int i=1; i<position-1; i++) {
+        if(curr == NULL) {
+            printf("\nPosition out of Bounds, please Enter Valid position.");
+            return;
+        }
+        curr = curr->next;
+    }
+    struct Node* temp = curr->next;
+    curr->next = temp->next;
+    (temp->next)->prev = curr;
+    free(temp);
+}
 
 void print(struct Node* head) {
     printf("\nLinkedList : head ");
@@ -102,8 +136,8 @@ int main() {
         printf("\n2.Insert At End");
         printf("\n3.Insert At Postion");
         printf("\n4.Delete At Beginning");
-        // printf("\n");
-        // printf("\n");
+        printf("\n5.Delete At End");
+        printf("\n6.Delete At Position");
         // printf("\n");
         printf("\nEnter Your Choice :");
         scanf("%d", &choice);
@@ -128,6 +162,14 @@ int main() {
                 break;
             case 4:
                 deleteAtBeginning(&head);
+                break;
+            case 5:
+                deleteAtEnd(&head);
+                break;
+            case 6:
+                printf("\nEnter Position :");
+                scanf("%d", &position);
+                deleteAtPosition(&head, position);
                 break;
             case 0:
                 printf("Exiting the program.");
