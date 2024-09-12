@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include <time.h>
+// #include <ctime>
 
 struct Node {
     int data;
@@ -149,9 +151,15 @@ void printList(struct Node* head) {
 int main() {
     int choice, data, position, key;
     struct Node* head = NULL;
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
+
 
     while (1) {
         system("cls");
+        printf("\nName : pattani divy chetanbhai");
+        printf("\nEnrollment number : 230130107107");
+        printf("\nCurrent date : %02d-%02d-%04d\n", tm->tm_mday, tm->tm_mon + 1, tm->tm_year + 1900);
         printList(head);
 
         printf("\n\n\n1. Insert at beginning");
