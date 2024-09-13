@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 struct Node {
     int data;
@@ -154,10 +155,15 @@ void print(struct Node* head) {
 }
 int main() {
     struct Node* head = NULL;
+    time_t t = time(NULL);
+    struct tm *tm = localtime(&t);
     
     int choice = 0,data = 0, position = 0;
     do {
         system("cls");
+        printf("\nName : pattani divy chetanbhai");
+        printf("\nEnrollment number : 230130107107");
+        printf("\nCurrent date : %02d-%02d-%04d\n", tm->tm_mday, tm->tm_mon + 1, tm->tm_year + 1900);
         print(head);
         printf("\n1.Insert At Beginning");
         printf("\n2.Insert At End");
