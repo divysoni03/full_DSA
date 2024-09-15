@@ -99,6 +99,7 @@ int main() {
                 system("pause");
                 break;
             case 0:
+                system("cls");
                 printf("\nExiting the program...");
                 break;
             default :
