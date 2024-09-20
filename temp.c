@@ -1,59 +1,44 @@
-#include <stdio.h>
- 
-#include <time.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-
-void bubbleSort(int array[], int size) {
-    int i, j, temp;
-
-    for (i = 0; i < size - 1; i++) {
-        for (j = 0; j < size - i - 1; j++) {
-            if (array[j] > array[j + 1]) {
-                temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-            }
-        }
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+struct Node* creatNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if(newNode == NULL) {
+        printf("\nMemory Allocation failed. please try again.");
+        return NULL;
     }
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
 }
 
+struct BinaryTree {
+    int index;
+};
+struct Node* buildTree(struct BinaryTree b, int nodes[]) {
+    b.index++;
+    if(nodes[b.index] == -1) return NULL;
 
-void printArray(int array[], int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
+    struct Node* newNode = creatNode(nodes[b.index]);
+    newNode->left = buildTree(b, nodes);
+    newNode->right = buildTree(b, nodes);
+
+    return newNode;
 }
 
-int main() {
-   
-      
-    time_t now = time(NULL);
-    struct tm *currentDateTime = localtime(&now);
-
-    
-    printf("Enrollment Number:230130107107 \nName: Pattani divy \n");    printf("Current Date: %d-%d-%d\n", currentDateTime->tm_year + 1900, currentDateTime->tm_mon + 1, currentDateTime->tm_mday);
-    printf("Current Time: %d:%d:%d\n", currentDateTime->tm_hour, currentDateTime->tm_min, currentDateTime->tm_sec);
-
-    int arraySize;
-    printf("Enter the size of the array: ");
-    scanf("%d", &arraySize);
-
-    int numbers[arraySize];
-    printf("Enter the elements of the array: ");
-    for (int i = 0; i < arraySize; i++) {
-        scanf("%d", &numbers[i]);
-    }
-
-    printf("Original array: ");
-    printArray(numbers, arraySize);
-
-    bubbleSort(numbers, arraySize);
-
-    printf("Sorted array: ");
-    printArray(numbers, arraySize);
-    
-     
+int main() {    
+    int nodes[] = {1,2,3,-1,-1,4,-1,-1,3,-1,5,-1,-1,-1};
+    struct BinaryTree myTree;
+    myTree.index = -1;
+    struct Node* root = buildTree(myTree, nodes);
+    printf("root Node data : %d", root->data);
+    printf("\ndata : %d", root->left->data);
+    printf("\ndata : %d", root->left->left->data);
+    printf("\ndata : %d", root->right->data);
     return 0;
-   
 }
