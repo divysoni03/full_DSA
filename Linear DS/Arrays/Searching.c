@@ -1,6 +1,33 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+void swap(int* first, int* second) {
+    int temp = *first;
+    *first = *second;
+    *second = temp;
+}
+
+void insertionSort(int* arr, int size) {
+    for (int i = 1; i < size; i++) {
+        int j = i-1;
+        int key = arr[i];
+        //move all elements greater than key to one position
+        // while(j >= 0 && arr[j] > key) {
+        //     arr[j+1] = arr[j];
+        //     j = j-1;
+        // }
+        while(j >= 0) {
+            if(arr[j] > key) {
+                arr[j+1] = arr[j];
+            }
+            else break;
+            j--;
+        }
+        //find a correct position for key
+        arr[j+1] = key;
+    }
+}
+
 // Searching methods
 int linearSearch(int arr[], int size, int target) {
     for (int i = 0; i < size; i++) {
@@ -13,7 +40,6 @@ int linearSearch(int arr[], int size, int target) {
 
 int binarySearch(int arr[], int size, int target) {
     int start = 0, end = size - 1, mid;
-    
     while (start <= end) {
         mid = start + (end - start) / 2;
         if (arr[mid] == target) {
@@ -82,7 +108,7 @@ int main() {
 
     int* arr = generateArray(size);
     int target;
-    
+    insertionSort(arr, size);
     printArray(arr, size);
 
     printf("\nEnter target: ");
