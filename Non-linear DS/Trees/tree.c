@@ -85,6 +85,72 @@ void printTree(struct Node* root, int space) {
     printTree(root->left, space); // Print left subtree
 }
 
+int height(struct Node* root) {
+    if(root == NULL) return 0;
+
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+}
+
+struct Node* deleteNode(struct Node* root, int data) {
+    if(root == NULL) return root; // if it becomes null then return null
+
+    if(data < root->data) { // if the data is in the left portion then call recursively to left portion
+        root->left = deleteNode(root->left, data);
+    }
+    else if(data > root->data) { // if the data is in the right portion call recursively to right portion
+        root->right = deleteNode(root->right, data);
+    }
+    else { // if we find the node which we are searching for then it won't be any left or right
+        if(root->left == NULL) { // if the left portion is null then make the right portion best successor
+
+        
+            struct Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right == NULL) { // if the right node is null then left will be the next successor
+            struct Node* temp = root->left; // store left and then return to the parent root -> of root
+            free(root);
+            return temp; // returning 
+        }
+
+        struct Node* temp = root->right;
+        while(temp != NULL) {
+            temp = temp->left; // going left till reaches null in the right node of the root Node
+        }
+        root->data = temp->data; // transferring the last node(best successor) data to the root node which will be deleted
+        root->right = deleteNode(root->right, temp->data); // it will delete the node after making successor
+    }
+
+    return root; //final return
+}
+
+void findMinMax(struct Node* root, int *min, int *max) {
+    struct Node* temp = root;
+    while(root->left != NULL) {
+        *min = root->data;
+        root = root->left; // moving into left direction to find the min value
+    }
+
+    while(temp->right != NULL) {
+        *max = temp->data;
+        temp = temp->right; // moving right direction to find the max value
+    }
+}
+
+void pruneTree(struct Node** root) {
+    if(*root != NULL) {
+        struct Node* temp = root;
+        pruneTree(&((*root)->left)); // calling left side nodes
+        pruneTree(&((*root)->right)); // calling right side nodes
+        free(temp);
+        *root = NULL; // so no-one can access the past root node and root node will remain NULL like starting
+    }
+}
+
 int main() {
     struct Node* root = NULL; // The root of the tree
     int choice = INT_MIN, data;
