@@ -90,7 +90,7 @@ void adjacencyMatrix() {
 
 void bfs(int startNode) {
     int queue[MAX_NODES], front = 0, rear = 0;
-    int visited[MAX_NODES] = {0};
+    int visited[MAX_NODES] = {0}; 
 
     queue[rear++] = startNode;
     visited[startNode] = 1;
@@ -282,4 +282,4 @@ for Dijkstra:
 -1 -1 -1
 
 
-*/*/
+*/
